@@ -10,6 +10,21 @@ An interactive web-based explorer for visualizing 2D photonic crystal structures
 - **Geometric Controls:** Dynamically adjust the radius/size of the placed shapes, and tune the variable $x$ parameter for certain Wyckoff positions.
 - **Area Statistics:** Calculates and displays fractional area statistics of the placed structures within the unit cell, leveraging `shapely` for boolean geometry operations.
 
+## Understanding Wyckoff Positions
+
+In crystallography, **Wyckoff positions** determine the precise locations of objects (like atoms, meta-atoms, or geometric holes) within a crystal's unit cell, dictated by the crystal's space group symmetry. They tell us exactly where we can place shapes inside the lattice so that the overall macroscopic symmetric properties of the crystal are perfectly preserved. 
+
+### Wyckoff Nomenclature
+
+Wyckoff positions are labelled using a number followed by a letter (e.g., **1a**, **2b**, **6d**). 
+- **The number (Multiplicity):** Indicates the number of symmetrically equivalent points that are generated in a single unit cell. For example, a multiplicity of '6' means placing an object at this position yields exactly 6 identical objects within the unit cell due to the symmetry of the lattice.
+- **The letter (Wyckoff Letter):** An alphabetical label (a, b, c, d...) assigned in ascending order starting from the position with the highest site symmetry. It serves as a unique identifier for that specific geometric arrangement within the space group.
+
+### Types of Positions
+
+- **Fixed Positions (e.g., 1a, 2b):** These correspond to exact, non-movable points of high symmetry (like the origin or exact center). Placing objects here typically requires just knowing the size (radius).
+- **Variable Positions (e.g., 6d, 4e):** These involve a degree of freedom, typically denoted by a fractional coordinate scaling parameter $x$. Changing this parameter moves the points symmetrically along specific axes or diagonal lines, allowing for continuously tunable structures (like expanding hexamers or rotating patterns) while still preserving the lattice's fundamental symmetry.
+
 ## 2D Crystal Structures and Wyckoff Positions
 
 This application supports two of the fundamental 2D Bravais lattices/plane groups, each with their own standardized high-symmetry Wyckoff positions:
@@ -39,10 +54,29 @@ The square lattice is defined by orthogonal vectors of equal length.
 1. Clone the repository and navigate into the directory.
 2. Install the required dependencies:
    ```bash
-   pip install dash plotly shapely
+   pip install -r requirements.txt
    ```
 3. Run the Dash application:
    ```bash
    python app.py
    ```
 4. Open the application in your local web browser (default usually `http://127.0.0.1:8050`).
+
+## Deployment as an Executable (.exe)
+
+This project can be fully packaged into a standalone Windows executable (`.exe`) via [PyInstaller](https://pyinstaller.org/). This compiles your Python code and its dependencies so end-users without Python can run the app locally.
+
+1. Ensure the PyInstaller package is installed:
+   ```bash
+   pip install pyinstaller
+   ```
+2. Build the application. Use the pre-existing spec file if there is one configured for your build environment:
+   ```bash
+   pyinstaller "Photonic Crystal Visualizer.spec"
+   ```
+   Or explicitly build from the main app file:
+   ```bash
+   pyinstaller --name "Photonic Crystal Visualizer" --onefile app.py
+   ```
+3. After the build completes, the generated executable will be placed inside the `dist/` directory. 
+4. Running the `.exe` will launch the Dash server in the background. Users will still need to navigate to `http://127.0.0.1:8050` in their web browser to view the application interface.
