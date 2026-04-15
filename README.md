@@ -51,14 +51,16 @@ The square lattice is defined by orthogonal vectors of equal length.
 
 ## Installation and Running
 
+This project uses [uv](https://github.com/astral-sh/uv) for fast, reliable, and reproducible environment management on Windows.
+
 1. Clone the repository and navigate into the directory.
-2. Install the required dependencies:
+2. Sync the environment and install dependencies:
    ```bash
-   pip install -r requirements.txt
+   uv sync
    ```
-3. Run the Dash application:
+3. Run the Dash application using `uv`:
    ```bash
-   python app.py
+   uv run python app.py
    ```
 4. Open the application in your local web browser (default usually `http://127.0.0.1:8050`).
 
@@ -66,17 +68,15 @@ The square lattice is defined by orthogonal vectors of equal length.
 
 This project can be fully packaged into a standalone Windows executable (`.exe`) via [PyInstaller](https://pyinstaller.org/). This compiles your Python code and its dependencies so end-users without Python can run the app locally.
 
-1. Ensure the PyInstaller package is installed:
+The `uv sync` command already installed `pyinstaller` into your locked environment.
+
+1. Build the application using `uv run` to ensure it uses the reproducible environment. You can use the pre-existing spec file if there is one configured:
    ```bash
-   pip install pyinstaller
-   ```
-2. Build the application. Use the pre-existing spec file if there is one configured for your build environment:
-   ```bash
-   pyinstaller "Photonic Crystal Visualizer.spec"
+   uv run pyinstaller "Photonic Crystal Visualizer.spec"
    ```
    Or explicitly build from the main app file:
    ```bash
-   pyinstaller --name "Photonic Crystal Visualizer" --onefile app.py
+   uv run pyinstaller --name "Photonic Crystal Visualizer" --onefile app.py
    ```
-3. After the build completes, the generated executable will be placed inside the `dist/` directory. 
-4. Running the `.exe` will launch the Dash server in the background. Users will still need to navigate to `http://127.0.0.1:8050` in their web browser to view the application interface.
+2. After the build completes, the generated executable will be placed inside the `dist/` directory. 
+3. Running the `.exe` will launch the Dash server in the background. Users will still need to navigate to `http://127.0.0.1:8050` in their web browser to view the application interface.
