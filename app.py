@@ -281,6 +281,7 @@ def update_plot(ltype, en_A, sel_A, x_A, r_A, en_B, sel_B, x_B, r_B, en_C, sel_C
     # Generate Stats Content
     cell_area = SQRT3 / 2 if is_hex else 1.0
     empty_area = cell_area - total_atom_area
+    empty_fraction = empty_area / cell_area
     
     stats_ui = html.Div(className="grid grid-cols-1 space-y-1.5 text-gray-800", children=[
         html.Div(className="flex justify-between", children=[
@@ -291,8 +292,8 @@ def update_plot(ltype, en_A, sel_A, x_A, r_A, en_B, sel_B, x_B, r_B, en_C, sel_C
             html.Span(f"{total_atom_area:.4f}", className="font-mono text-blue-600 font-bold")
         ]),
         html.Div(className="flex justify-between font-bold pt-2 mt-1 border-t border-gray-200", children=[
-            html.Span("Empty Area:"), 
-            html.Span(f"{empty_area:.4f}", className="font-mono text-gray-800")
+            html.Span("Empty Fraction:"), 
+            html.Span(f"{empty_fraction:.4f}", className="font-mono text-gray-800")
         ]),
         html.Div("(*Calculated using exact geometric intersections, resolving overlays smoothly)", className="text-[10px] text-gray-400 mt-2 italic")
     ])
